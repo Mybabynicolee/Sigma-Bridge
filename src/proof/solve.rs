@@ -75,7 +75,7 @@ mod tests {
 
     #[test]
     fn the_proof_is_a_base64url_digest_of_the_right_size() {
-        let solution = solve(&challenge(), "89556544-39a0-4675-8b0c-77713c25f612").unwrap();
+        let solution = solve(&challenge(), "3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd").unwrap();
         let bytes = base64::engine::general_purpose::URL_SAFE_NO_PAD
             .decode(&solution.proof)
             .unwrap();
