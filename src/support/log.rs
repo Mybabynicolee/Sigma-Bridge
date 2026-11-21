@@ -304,8 +304,8 @@ mod tests {
     #[test]
     fn the_uuid_keeps_only_the_ends() {
         assert_eq!(
-            mask_uuid("89556544-39a0-4675-8b0c-77713c25f612"),
-            "8955****f612"
+            mask_uuid("3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd"),
+            "3f0a****05dd"
         );
     }
 
