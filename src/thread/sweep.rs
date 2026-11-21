@@ -65,7 +65,7 @@ fn from_message(value: &Value) -> Option<usize> {
 mod tests {
     use super::*;
 
-    const UUID: &str = "89556544-39a0-4675-8b0c-77713c25f612";
+    const UUID: &str = "3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd";
 
     #[test]
     fn the_purge_path_names_the_user_and_all_threads() {
@@ -96,7 +96,7 @@ mod tests {
     #[test]
     fn the_count_is_read_from_the_message_line() {
         let value: Value = serde_json::from_str(
-            r#"{"message":"Deleted 5 threads for user 89556544-39a0-4675-8b0c-77713c25f612","status":"success","code":null}"#,
+            r#"{"message":"Deleted 5 threads for user 3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd","status":"success","code":null}"#,
         )
         .unwrap();
         assert_eq!(count(&value), 5);
