@@ -99,7 +99,7 @@ mod tests {
     use super::*;
 
     const BODY: &str = r#"{
-      "user_id": "89556544-39a0-4675-8b0c-77713c25f612",
+      "user_id": "3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd",
       "subscription": {"plan_name": "free"},
       "image_gen_limit": {"current": 0, "remaining": 4},
       "hermes_limit": {"current": 3, "remaining": 93},
@@ -111,7 +111,7 @@ mod tests {
     fn the_profile_reads_the_hermes_meter() {
         let value: Value = serde_json::from_str(BODY).unwrap();
         let profile = Profile::parse(&value).unwrap();
-        assert_eq!(profile.user_id, "89556544-39a0-4675-8b0c-77713c25f612");
+        assert_eq!(profile.user_id, "3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd");
         assert_eq!(profile.plan, "free");
         assert_eq!(profile.hermes.current, 3);
         assert_eq!(profile.hermes.remaining, 93);
