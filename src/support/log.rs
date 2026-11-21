@@ -290,15 +290,15 @@ mod tests {
 
     #[test]
     fn the_key_keeps_a_head_and_a_tail_only() {
-        let text = mask_key("sk_live_abcdefghijklmnopqrstuvwxyz0123456789");
-        assert!(text.starts_with("sk_live_"));
-        assert!(text.ends_with("0123456789"));
-        assert!(text.contains("*****"));
+        let text = mask_key("aaaabbbbccccddddeeeeffffgggghhhh");
+        assert!(text.starts_with("aaaabbbb"));
+        assert!(text.ends_with("ffgggghhhh"));
+        assert!(text.contains("**************"));
     }
 
     #[test]
     fn a_short_key_is_masked_whole() {
-        assert_eq!(mask_key("sk_live_abc"), "***********");
+        assert_eq!(mask_key("aaaabbbb"), "********");
     }
 
     #[test]
