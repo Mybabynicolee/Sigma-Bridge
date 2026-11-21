@@ -39,7 +39,7 @@ mod tests {
     fn turn() -> Turn<'static> {
         Turn {
             query: "Reply with exactly: HAROK_1",
-            session_id: "89556544-39a0-4675-8b0c-77713c25f612",
+            session_id: "3f0a1c7e-5b24-4d81-9a6f-2c8e7b4105dd",
             token: "access-token",
             pow_session: "pow-token",
         }
