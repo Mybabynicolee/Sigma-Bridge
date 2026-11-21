@@ -5,8 +5,17 @@ use crate::run::serve;
 
 pub const DEFAULT_MODE: &str = "serve";
 
+const USAGE: &str = "\
+Usage: sigmabridge-bot <mode> [--root DIR]
+
+  serve       run the OpenAI compatible bridge
+  probe       check the host and every refresh token
+  tokenchat   send one message with a raw access token
+  selftest    run the offline checks
+";
+
 pub fn usage() -> String {
-    "Usage: sigmabridge [serve|probe|selftest|tokenchat] [--root DIR]".to_string()
+    USAGE.trim_end().to_string()
 }
 
 pub async fn dispatch(args: &[String]) -> Result<(), String> {
@@ -25,8 +34,10 @@ pub async fn dispatch(args: &[String]) -> Result<(), String> {
                 .map_err(|err| err.to_string())
         }
         "selftest" => selftest::run().await.map_err(|err| err.to_string()),
-        "help" => {
-            println!("{}", usage());
+        "help" | "-h" | "--help" => {
+            for line in usage().lines() {
+                crate::support::log::ly(line);
+            }
             Ok(())
         }
         other => Err(format!("unknown mode {}\n{}", other, usage())),
@@ -110,10 +121,8 @@ mod tests {
 
     #[test]
     fn the_usage_line_is_stable() {
-        assert_eq!(
-            usage(),
-            "Usage: sigmabridge [serve|probe|selftest|tokenchat] [--root DIR]"
-        );
+        assert!(usage().starts_with("Usage: sigmabridge-bot <mode>"));
+        assert!(usage().contains("selftest"));
     }
 
     #[tokio::test]

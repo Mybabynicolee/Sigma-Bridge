@@ -8,8 +8,20 @@ mod socket;
 mod support;
 mod thread;
 
-fn main() {
+use std::process::ExitCode;
+
+#[tokio::main]
+async fn main() -> ExitCode {
     net::client::install_crypto();
+
+    tokio::spawn(async move {
+        let _ = tokio::signal::ctrl_c().await;
+        support::log::finish_status();
+        support::log::lr("Script stopped by user");
+        std::process::exit(0);
+    });
+
+    support::log::arm();
 
     let args: Vec<String> = std::env::args().skip(1).collect();
     if args.iter().any(|arg| arg == "--quiet") {
@@ -18,21 +30,11 @@ fn main() {
 
     support::banner::print_banner();
 
-    let runtime = match tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .build()
-    {
-        Ok(runtime) => runtime,
-        Err(err) => {
-            support::log::lr(&format!("The runtime could not start: {}", err));
-            std::process::exit(1);
+    match cli::dispatch::dispatch(&args).await {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(message) => {
+            support::log::lr(&message);
+            ExitCode::FAILURE
         }
-    };
-
-    let outcome = runtime.block_on(cli::dispatch::dispatch(&args));
-
-    if let Err(message) = outcome {
-        support::log::lr(&message);
-        std::process::exit(1);
     }
 }
